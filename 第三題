@@ -1,0 +1,35 @@
+#include "SevSeg.h" 
+ SevSeg sevseg; 
+
+ int Pin10,Pin11;  
+ void setup() { 
+   byte numDigits = 4; 
+   byte digitPins[] = {5, 4, 3, 2}; 
+   byte segmentPins[] = {6, 7, 8, 9, 10, 11, 12, 13}; 
+   sevseg.begin(COMMON_CATHODE, numDigits, digitPins,segmentPins); 
+   Serial.begin(9600);
+   Serial.println("03 04050626/04050254"); 
+
+ } 
+ void loop() 
+ { 
+    int a;
+   if(Serial.available()) 
+   {
+    a = Serial.parseInt();
+   if(a<0||a>9999)
+   {
+     Serial.println("range error");
+   }
+   else
+   {
+    Serial.println(a);
+    sevseg.setNumber(a); 
+   }
+   }
+          sevseg.refreshDisplay(); 
+}
+
+     
+
+      
